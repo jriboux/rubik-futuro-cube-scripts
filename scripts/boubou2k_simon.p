@@ -23,17 +23,18 @@ must be placed in global namespace!
 #define COLOR_GREEN 4
 #define NB_COLORS 4
 
-#define SEQ_SIZE 64
+#define SEQ_SIZE 64 // 64 * 16 = 1024, should be enough ;)
 
 
 new icon[]=[ICON_MAGIC1,ICON_MAGIC2,2,0, 0,0xFF000000,0,  0x00FF0000,0,0xFFFF0000,  0,0x0000FF00,0,  ''UFO'',''UFO'']
 new palette[]=[0xFF000000,0x0000FF00,0xFFFF0000,0x00FF0000,0x04000000,0x00000400,0x04040000,0x00040000,0xFFFFFF00,0xFF000000,0x00FF0000]
+
 new points[][]=[[5,27,30,33],[7,45,46,47],[3,20,23,26],[1,42,43,44]]
 new notes[]=["_a1","_c2","_d2","_e2"]
-/*new intro[]=[]*/
+
 new seq[SEQ_SIZE]
 new seqLength = 0
-
+new delay = 400
 
 getSeqItem(index) {
     new arrayIndex = index/16
@@ -60,28 +61,6 @@ resetSeq() {
     seqLength = 0
 }
 
-/* Initialize game */
-init() {
-    ICON(icon)
-    SetIntensity(256)
-    RegAllSideTaps()
-    PaletteFromArray(palette)
-    resetSeq()
-}
-
-/* Intro animation */
-intro() {
-    new color = 0
-    for (color=0; color<=NB_COLORS; color++) {
-        Delay(250)
-        playColor(color)
-        PrintCanvas()
-    }
-    Delay(500)
-    playColor(0)
-    PrintCanvas()
-}
-
 /* Get color from side number, 0 if no color */
 getColor(side) {
     switch (side) {
@@ -95,6 +74,29 @@ getColor(side) {
             return COLOR_YELLOW
     }
     return 0
+}
+
+/* Initialize game */
+init() {
+    ICON(icon)
+    SetIntensity(256)
+    RegAllSideTaps()
+    PaletteFromArray(palette)
+    resetSeq()
+    delay = 300
+}
+
+/* Intro animation */
+intro() {
+    new color = 0
+    for (color=0; color<=NB_COLORS; color++) {
+        Delay(250)
+        playColor(color)
+        PrintCanvas()
+    }
+    Delay(500)
+    playColor(0)
+    PrintCanvas()
 }
 
 /* Wait for tab before start */
@@ -148,32 +150,47 @@ playSeq() {
         Quiet()
         Delay(50)
         playColor(getSeqItem(i)+1)
-        Delay(400)
+        Delay(500)
     }
     playColor(0)
 }
 
 error() {
+    new color
+    new i
+
     Play("_g_CRASH2")
-    SetColor(10)
-    DrawCube()
+
+    SetColor(COLOR_RED)
+    for (color=1; color<=NB_COLORS; color++) {
+        for (i=0;i<sizeof(points[]); i++)
+            DrawPoint(points[color-1][i])
+    }
     PrintCanvas()
-    Delay(2000)
+    Delay(1000)
+    Quiet()
+
     SetColor(0)
     DrawCube()
     PrintCanvas()
 }
 
 success() {
-    SetColor(11)
-    DrawCube()
+    new color
+    new i
+
+    Play("cink3")
+
+    /* draw new color */
+    for (color=1; color<=NB_COLORS; color++) {
+        SetColor(color)
+        for (i=0;i<sizeof(points[]); i++)
+            DrawPoint(points[color-1][i])
+    }
     PrintCanvas()
-    Play("ballhit")
-    Delay(150)
-    Play("ballhit")
-    Delay(150)
-    Play("ballhit")
-    Delay(100)
+    Delay(500)
+    Quiet()
+
     SetColor(0)
     DrawCube()
     PrintCanvas()
@@ -199,7 +216,7 @@ userSeq() {
                     if (color == getSeqItem(currentNote) + 1) {
                         currentNote++
                         if (currentNote==seqLength) {
-                            Delay(400)
+                            Delay(delay)
                             result = 1
                         }
                     } else {
