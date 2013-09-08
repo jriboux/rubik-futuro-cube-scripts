@@ -1,12 +1,8 @@
 /*
 boubou2k_simon.p
 
-This example shows simple implementation of rubik's cube with animated rotations.
-Direction of rotation is determined by inclination of tapped side.
-SolveDir function reads accelerometer data and compares them with threshold "ACC_THRESHOLD"
-for direction. Also each move is stored into variable, so the progress is never lost.
-Example of correct use of ICON() is demonstrated as well. Note that definition of icon[]
-must be placed in global namespace!
+Simple implementation of Simon music game.
+Tap to start and then reproduce the music sequence tapping good sides in good order.
 
 */
 
