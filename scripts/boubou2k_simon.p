@@ -248,7 +248,7 @@ main() {
             success()
         } else { // >0 = fail, game is over, = score
             error()
-            Score(score, SCORE_NORMAL, 1, 0)
+            Score(score-1, SCORE_NORMAL, 1, 0)
             Delay(500)
             init()
             intro()
