@@ -26,15 +26,16 @@ must be placed in global namespace!
 #define SEQ_SIZE 64 // 64 * 16 = 1024, should be enough ;)
 
 
-new icon[]=[ICON_MAGIC1,ICON_MAGIC2,2,0, 0,0xFF000000,0,  0x00FF0000,0,0xFFFF0000,  0,0x0000FF00,0,  ''UFO'',''UFO'']
+new icon[]=[ICON_MAGIC1,ICON_MAGIC2,2,5, 0,0xFF000000,0,  0x00FF0000,0,0xFFFF0000,  0,0x0000FF00,0,  '''','''']
 new palette[]=[0xFF000000,0x0000FF00,0xFFFF0000,0x00FF0000,0x04000000,0x00000400,0x04040000,0x00040000,0xFFFFFF00,0xFF000000,0x00FF0000]
 
 new points[][]=[[5,27,30,33],[7,45,46,47],[3,20,23,26],[1,42,43,44]]
 new notes[]=["_a1","_c2","_d2","_e2"]
 
 new seq[SEQ_SIZE]
-new seqLength = 0
-new delay = 400
+new seqLength
+new delay
+new score
 
 getSeqItem(index) {
     new arrayIndex = index/16
@@ -84,6 +85,7 @@ init() {
     PaletteFromArray(palette)
     resetSeq()
     delay = 300
+    score = 0
 }
 
 /* Intro animation */
@@ -145,6 +147,7 @@ playColor(color) {
 
 playSeq() {
     new i
+
     Delay(250)
     for (i=0; i<getSeqLength(); i++) {
         Quiet()
@@ -217,10 +220,10 @@ userSeq() {
                         currentNote++
                         if (currentNote==seqLength) {
                             Delay(delay)
-                            result = 1
+                            result = 0
                         }
                     } else {
-                        result = 0
+                        result = seqLength
                     }
                 }
             }
@@ -240,10 +243,13 @@ main() {
         Sleep()
         appendSeqItem(GetRnd(NB_COLORS))
         playSeq()
-        if (userSeq()) {
+        score = userSeq()
+        if (score == 0) { // 0 = success, user keeps playing
             success()
-        } else {
+        } else { // >0 = fail, game is over, = score
             error()
+            Score(score, SCORE_NORMAL, 1, 0)
+            Delay(500)
             init()
             intro()
             tapToStart()
