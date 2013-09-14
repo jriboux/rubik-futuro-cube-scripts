@@ -3,6 +3,16 @@ Rubik Futuro Cube Scripts
 
 Various Rubik's Futuro Cube games, apps or mods.
 
+Cuvex
+-----
+
+This is a tetravex in a cube.
+
+Tap to shuffle.
+Tap on top to rotate the top side.
+Tap on side to swap side and top.
+The goal is to match colors accross all the edges.
+
 Simon
 -----
 
@@ -17,3 +27,4 @@ Fire
 ----
 
 This is a simple test of a fire effect on the cube sides.
+
