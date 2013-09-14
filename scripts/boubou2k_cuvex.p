@@ -1,8 +1,11 @@
 /*
-boubou2k_simon.p
+boubou2k_cuvex.p
 
-Simple implementation of Simon music game.
-Tap to start and then reproduce the music sequence tapping good sides in good order.
+Tetravex in a cube.
+Tap to shuffle.
+Tap on top to rotate the top side.
+Tap on side to swap side and top.
+The goal is to match colors accross all edges.
 
 */
 
