@@ -23,6 +23,12 @@ Each side has a color (displayed on the top side) and each color is associated t
 If you played exactly the same sequence, a new note is added to the sequence and you must play again the whole sequence from the begining.
 You loose when you make a mistake. The score is the length of the sequence you last played.
 
+Gravity
+----
+
+Clone of Rubik's Futuro Cube gravity game.
+Added an animation for face turning.
+
 Fire
 ----
 
