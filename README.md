@@ -11,7 +11,7 @@ This is a tetravex in a cube.
 Tap to shuffle.
 Tap on top to rotate the top side.
 Tap on side to swap side and top.
-The goal is to match colors accross all the edges.
+The goal is to match colors accross all edges.
 
 Simon
 -----

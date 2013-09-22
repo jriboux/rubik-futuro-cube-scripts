@@ -22,7 +22,7 @@ Tap to start and then reproduce the music sequence tapping good sides in good or
 #define SEQ_SIZE 64 // 64 * 16 = 1024, should be enough ;)
 
 
-new icon[]=[ICON_MAGIC1,ICON_MAGIC2,2,5, 0,0xFF000000,0,  0x00FF0000,0,0xFFFF0000,  0,0x0000FF00,0,  '''','''']
+new icon[]=[ICON_MAGIC1,ICON_MAGIC2,3,0, 0,0xFF000000,0,  0x00FF0000,0,0xFFFF0000,  0,0x0000FF00,0,  '''','''']
 new palette[]=[0xFF000000,0x0000FF00,0xFFFF0000,0x00FF0000,0x04000000,0x00000400,0x04040000,0x00040000,0xFFFFFF00,0xFF000000,0x00FF0000]
 
 new points[][]=[[5,27,30,33],[7,45,46,47],[3,20,23,26],[1,42,43,44]]

@@ -1,11 +1,7 @@
 /*
-boubou2k_cuvex.p
+boubou2k_gravity.p
 
-Tetravex in a cube.
-Tap to shuffle.
-Tap on top to rotate the top side.
-Tap on side to swap side and top.
-The goal is to match colors accross all edges.
+Rubik's Futuro Cube Gravity game clone
 
 */
 
@@ -17,15 +13,7 @@ new icon[]=[ICON_MAGIC1,ICON_MAGIC2,3,0,
     0,0x007FBF00,0,
     '''','''']
 new palette[]=[
-    0xFF000000, 0xFF003F00, 0xFF00FF00, 0x00FF0000, 0xFFBF0000,
-    0xFF3F0000, 0x0000FF00, 0x007FBF00, 0x00FF7F00, 0xFFFFFF00
-    ]
-
-new const edges[12][2] = [
-    [1, 43], [3, 23], [5, 30], [7, 46],
-    [10, 37], [12, 32], [14, 21], [16, 52],
-    [19, 39], [25, 48],
-    [28, 41], [34, 50]
+    cORANGE, cPURPLE, cRED, cBLUE, cGREEN, cMAGENTA
     ]
 
 new const rotation45[9] = [3, 0, 1, 6, 4, 2, 7, 8, 5]
@@ -41,11 +29,6 @@ new const belts[3][3][12] = [[
         [28,31,34,50,49,48,25,22,19,39,40,41],
         [29,32,35,53,52,51,24,21,18,36,37,38]
     ]]
-new const posInBelt[3][6] = [
-        [ 0, 2, 3, 1,-1,-1],
-        [ 0, 2,-1,-1, 3, 1],
-        [-1,-1, 2, 0, 3, 1]
-    ]
 
 new const ANIM_DELAY = 72
 
@@ -62,13 +45,8 @@ init() {
 /* Intro animation */
 intro() {
     new i
-    new color
-
-    for (i=0; i<4; i++) {
-        color = GetRnd(10)+1
-        cube[edges[i][0]] = color
-        cube[edges[i][1]] = color
-    }
+    for (i=0; i<6*9; i++)
+        cube[i] = i/9+1
     refresh()
 }
 
@@ -91,13 +69,10 @@ tapToStart() {
 
 generate() {
     new i
-    new color
-
-    for (i=0; i<12; i++) {
-        color = GetRnd(10)+1
-        cube[edges[i][0]] = color
-        cube[edges[i][1]] = color
+    for (i=0; i<6*9; i++) {
+        cube[i] = i/9+1
     }
+    refresh()
 }
 
 shuffle() {
@@ -110,46 +85,40 @@ shuffle() {
         side = GetRnd(6)
         amount = GetRnd(3)+1
         move = GetRnd(2)
-        if (move)
-            for (j=1; j<=amount; j++)
+        if (move) {
+            for (j=1; j<=amount; j++) {
                 rotate(side, 1)
-        else
-            for (j=1; j<=amount; j++)
-                swap(findBelt(side), 1, side, 1)
+            }
+        } else {
+            for (j=1; j<=amount; j++) {
+                shift(findBelt(side), 1)
+            }
+        }
     }
 
     Quiet()
 }
 
-swap(belt, dir, top, delay=0) {
-    swap1(belt, dir, top)
-    refresh()
-    Sleep(delay>0?delay:ANIM_DELAY)
-    swap1(belt, dir, top)
-    refresh()
-    Sleep(delay>0?delay:ANIM_DELAY)
-    swap1(belt, dir, top)
+shift(belt, dir=1) {
+    shift1(belt, dir)
     refresh()
 }
-swap1(belt, dir, top) {
-    new temp
-    new i
-    new j
-    new curbelt[12]
-    new p = ((findPos(belt, top)-dir)*3)%12
+
+shift1(belt, dir=1) {
+    new temp, i, j, curbelt[12]
 
     for (j=0;j<3;j++) {
         curbelt = belts[belt][j]
         if (dir==1) {
-            temp=cube[curbelt[p%12]]
-            for (i=0;i<5;i++)
-                cube[curbelt[(i+p)%12]]=cube[curbelt[(i+1+p)%12]]
-            cube[curbelt[(5+p)%12]]=temp
+            temp=cube[curbelt[0]]
+            for (i=0;i<11;i++)
+                cube[curbelt[i]]=cube[curbelt[i+1]]
+            cube[curbelt[11]]=temp
         } else {
-            temp=cube[curbelt[(5+p)%12]]
-            for (i=5;i>0;i--)
-                cube[curbelt[(i+p)%12]]=cube[curbelt[(i-1+p)%12]]
-            cube[curbelt[p]]=temp
+            temp=cube[curbelt[11]]
+            for (i=11;i>0;i--)
+                cube[curbelt[i]]=cube[curbelt[i-1]]
+            cube[curbelt[0]]=temp
         }
     }
 }
@@ -162,7 +131,8 @@ rotate(side, delay=0) {
     refresh()
 }
 rotate45(side) {
-    new i, temp[9]
+    new i
+    new temp[9]
     for (i=0; i<9; i++)
         temp[i] = cube[side * 9 + rotation45[i]]
     for (i=0; i<9; i++)
@@ -209,10 +179,6 @@ findTop() {
     return (GetCursor()&0x0000003F)/9
 }
 
-findPos(belt, top) {
-    return posInBelt[belt][top]
-}
-
 success() {
     Play("clapping")
     Delay(2000)
@@ -220,8 +186,8 @@ success() {
 
 checkSuccess() {
     new i
-    for (i=0; i<12; i++)
-        if (cube[edges[i][0]] != cube[edges[i][1]])
+    for (i=0; i<54; i++)
+        if (cube[i] != cube[i-i%9])
             return 0
     return 1
 }
@@ -238,14 +204,11 @@ main() {
         Sleep()
 
         if (Motion()) {
-            if (eTapToTop()) {
-                side = eTapSide()
+            side = eTapSide()
+            if (eTapToTop())
                 rotate(side)
-            }
-            if (eTapSideOK() && eTapToSide()) {
-                side = eTapSide()
-                swap(findBelt(side), findDir(side), findTop())
-            }
+            if (eTapSideOK() && eTapToSide())
+                shift(findBelt(side), findDir(side))
             AckMotion()
         }
 
