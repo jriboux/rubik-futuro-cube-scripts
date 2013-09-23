@@ -16,10 +16,15 @@ new icon[]=[ICON_MAGIC1,ICON_MAGIC2,3,0,
     0xFFBF0000,0,0xFF00FF00,
     0,0x007FBF00,0,
     '''','''']
+//new palette[]=[
+//    0xFF000000, 0xFF003F00, 0xFF00FF00, 0x00FF0000, 0xFFBF0000,
+//    0xFF3F0000, 0x0000FF00, 0x007FBF00, 0x00FF7F00, 0xFFFFFF00
+//    ]
 new palette[]=[
-    0xFF000000, 0xFF003F00, 0xFF00FF00, 0x00FF0000, 0xFFBF0000,
-    0xFF3F0000, 0x0000FF00, 0x007FBF00, 0x00FF7F00, 0xFFFFFF00
+    cORANGE, cPURPLE, cRED, cBLUE, cGREEN, cMAGENTA
     ]
+
+new const NB_COLORS = 6
 
 new const edges[12][2] = [
     [1, 43], [3, 23], [5, 30], [7, 46],
@@ -65,7 +70,7 @@ intro() {
     new color
 
     for (i=0; i<4; i++) {
-        color = GetRnd(10)+1
+        color = GetRnd(NB_COLORS)+1
         cube[edges[i][0]] = color
         cube[edges[i][1]] = color
     }
@@ -93,10 +98,17 @@ generate() {
     new i
     new color
 
+    new color_count[6] = [0]
+
     for (i=0; i<12; i++) {
-        color = GetRnd(10)+1
-        cube[edges[i][0]] = color
-        cube[edges[i][1]] = color
+        // max 3 edges of the same color => min 4 different colors
+        color = GetRnd(NB_COLORS)
+        while (color_count[color] >= 3)
+            color = GetRnd(NB_COLORS)
+        color_count[color] += 1
+
+        cube[edges[i][0]] = color + 1
+        cube[edges[i][1]] = color + 1
     }
 }
 
