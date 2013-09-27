@@ -8,9 +8,9 @@ Rubik's Futuro Cube Gravity game clone
 #include <futurocube>
 
 new icon[]=[ICON_MAGIC1,ICON_MAGIC2,3,0,
-    0,0xFFBF0000,0,
-    0xFFBF0000,0,0xFF00FF00,
-    0,0x007FBF00,0,
+    cORANGE,cPURPLE,cGREEN,
+    cORANGE,cPURPLE,cGREEN,
+    cORANGE,cPURPLE,cGREEN,
     '''','''']
 new palette[]=[
     cORANGE, cPURPLE, cRED, cBLUE, cGREEN, cMAGENTA

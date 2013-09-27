@@ -144,16 +144,14 @@ swap(belt, dir, top, delay=0) {
     refresh()
 }
 swap1(belt, dir, top) {
-    new temp
-    new i
-    new j
+    new temp, i, j
     new curbelt[12]
     new p = ((findPos(belt, top)-dir)*3)%12
 
     for (j=0;j<3;j++) {
         curbelt = belts[belt][j]
         if (dir==1) {
-            temp=cube[curbelt[p%12]]
+            temp=cube[curbelt[p]]
             for (i=0;i<5;i++)
                 cube[curbelt[(i+p)%12]]=cube[curbelt[(i+1+p)%12]]
             cube[curbelt[(5+p)%12]]=temp
