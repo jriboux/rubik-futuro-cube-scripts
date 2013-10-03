@@ -11,9 +11,9 @@ The goal is to put each colors on its own side, like rubik's cube.
 #include <futurocube>
 
 new icon[]=[ICON_MAGIC1,ICON_MAGIC2,3,0,
-    cORANGE,cORANGE,cPURPLE,
-    cORANGE,cPURPLE,cPURPLE,
-    cORANGE,cORANGE,cPURPLE,
+    cMAGENTA,cMAGENTA,cRED,
+    cMAGENTA,cRED,cRED,
+    cMAGENTA,cMAGENTA,cRED,
     '''','''']
 new palette[]=[
     cORANGE, cPURPLE, cRED, cBLUE, cGREEN, cMAGENTA
@@ -45,7 +45,7 @@ new const topAndSide2Edge[6][6] = [
         [ 3,  7,  9, 11, -1, -1]
     ]
 
-new const ANIM_DELAY = 72
+new const ANIM_DELAY = 59
 
 new cube[54]
 
