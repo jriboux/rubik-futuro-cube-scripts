@@ -13,10 +13,21 @@ Tap on top to rotate the top side.
 Tap on side to swap side and top.
 The goal is to match colors accross all edges.
 
-Edge turning puzzle
--------------------
+Edge turning puzzle V1
+----------------------
 
-This is an edge turning puzzle, like helicopter cube, but when you rotate an edge, centers rotate too.
+This is an edge turning puzzle, like curvy copter cube, but when you rotate an edge, centers rotate too.
+
+Tap to shuffle.
+Tap on side to flip top edge.
+The goal is to put each colors on its own side, like rubik's cube.
+
+Edge turning puzzle V2
+----------------------
+
+This is an edge turning puzzle, like curvy copter cube, but when you rotate an edge, centers rotate too.
+This version differs from version 1 in the way corners are managed. When an edge is flipped, the sides of the corners are swapped too.
+The corners solve exactly the same way you could solve corners on a curvy copter cube.
 
 Tap to shuffle.
 Tap on side to flip top edge.

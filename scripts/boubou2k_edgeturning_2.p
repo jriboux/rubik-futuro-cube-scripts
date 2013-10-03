@@ -2,7 +2,9 @@
 boubou2k_edgeturning_2.p
 
 This is an edge turning puzzle, like helicopter cube, but when you rotate an edge, centers rotate too.
-The only difference with edge turning 1 is that the corners around the edge are swapped too.
+This version differs from version 1 in the way corners are managed. When an edge is flipped, the sides of the corners are swapped too.
+The corners solve exactly the same way you could solve corners on a curvy copter cube.
+
 Tap to shuffle.
 Tap on side to flip top edge.
 The goal is to put each colors on its own side, like rubik's cube.
