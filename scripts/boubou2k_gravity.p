@@ -16,6 +16,8 @@ new palette[]=[
     cORANGE, cPURPLE, cRED, cBLUE, cGREEN, cMAGENTA
     ]
 
+new savedgame[] = [VAR_MAGIC1, VAR_MAGIC2, ''boubou2k_gravity'']
+
 new const rotation45[9] = [3, 0, 1, 6, 4, 2, 7, 8, 5]
 
 new const belts[3][3][12] = [[
@@ -38,6 +40,7 @@ new cube[54]
 init() {
     ICON(icon)
     SetIntensity(256)
+    RegisterVariable(savedgame)
     RegAllSideTaps()
     PaletteFromArray(palette)
 }
@@ -48,6 +51,18 @@ intro() {
     for (i=0; i<6*9; i++)
         cube[i] = i/9+1
     refresh()
+}
+
+loadgame() {
+    if(IsGameResetRequest() || !LoadVariable(''boubou2k_gravity'', cube)) {
+        return 0
+    } else {
+        refresh()
+        return 1
+    }
+}
+savegame() {
+    StoreVariable(''boubou2k_gravity'', cube)
 }
 
 /* Wait for tab before start */
@@ -194,9 +209,11 @@ checkSuccess() {
 
 main() {
     init()
-    intro()
-    tapToStart()
-    shuffle()
+    if (!loadgame()) {
+        intro()
+        tapToStart()
+        shuffle()
+    }
 
     new side
 
@@ -205,10 +222,16 @@ main() {
 
         if (Motion()) {
             side = eTapSide()
-            if (eTapToTop())
+            if (eTapToTop()) {
+                Vibrate(50)
                 rotate(side)
-            if (eTapSideOK() && eTapToSide())
+                savegame()
+            }
+            if (eTapSideOK() && eTapToSide()) {
+                Vibrate(50)
                 shift(findBelt(side), findDir(side))
+                savegame()
+            }
             AckMotion()
         }
 

@@ -20,9 +20,12 @@ new icon[]=[ICON_MAGIC1,ICON_MAGIC2,3,0,
 //    0xFF000000, 0xFF003F00, 0xFF00FF00, 0x00FF0000, 0xFFBF0000,
 //    0xFF3F0000, 0x0000FF00, 0x007FBF00, 0x00FF7F00, 0xFFFFFF00
 //    ]
+
 new palette[]=[
     cORANGE, cPURPLE, cRED, cBLUE, cGREEN, cMAGENTA
     ]
+
+new savedgame[] = [VAR_MAGIC1, VAR_MAGIC2, ''boubou2k_cuvex'']
 
 new const NB_COLORS = 6
 
@@ -60,20 +63,26 @@ new cube[54]
 init() {
     ICON(icon)
     SetIntensity(256)
+    RegisterVariable(savedgame)
     RegAllSideTaps()
     PaletteFromArray(palette)
 }
 
+loadgame() {
+    if(IsGameResetRequest() || !LoadVariable(''boubou2k_cuvex'', cube)) {
+        return 0
+    } else {
+        refresh()
+        return 1
+    }
+}
+savegame() {
+    StoreVariable(''boubou2k_cuvex'', cube)
+}
+
 /* Intro animation */
 intro() {
-    new i
-    new color
-
-    for (i=0; i<4; i++) {
-        color = GetRnd(NB_COLORS)+1
-        cube[edges[i][0]] = color
-        cube[edges[i][1]] = color
-    }
+    generate()
     refresh()
 }
 
@@ -238,9 +247,11 @@ checkSuccess() {
 
 main() {
     init()
-    intro()
-    tapToStart()
-    shuffle()
+    if (!loadgame()) {
+        intro()
+        tapToStart()
+        shuffle()
+    }
 
     new side
 
@@ -250,11 +261,15 @@ main() {
         if (Motion()) {
             if (eTapToTop()) {
                 side = eTapSide()
+                Vibrate(50)
                 rotate(side)
+                savegame()
             }
             if (eTapSideOK() && eTapToSide()) {
                 side = eTapSide()
+                Vibrate(50)
                 swap(findBelt(side), findDir(side), findTop())
+                savegame()
             }
             AckMotion()
         }

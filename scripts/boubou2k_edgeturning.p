@@ -16,6 +16,8 @@ new palette[]=[
     cORANGE, cPURPLE, cRED, cBLUE, cGREEN, cMAGENTA
     ]
 
+new savedgame[] = [VAR_MAGIC1, VAR_MAGIC2, ''boubou2k_edgeturning'']
+
 new const edges[12][8] = [
         [ 0,  4,  2,   44, 40, 42,    1, 43],
         [ 6,  4,  0,   20, 22, 26,    3, 23],
@@ -48,6 +50,7 @@ new cube[54]
 init() {
     ICON(icon)
     SetIntensity(256)
+    RegisterVariable(savedgame)
     RegAllSideTaps()
     PaletteFromArray(palette)
 }
@@ -58,6 +61,18 @@ intro() {
     for (i=0; i<6*9; i++)
         cube[i] = i/9+1
     refresh()
+}
+
+loadgame() {
+    if(IsGameResetRequest() || !LoadVariable(''boubou2k_edgeturning'', cube)) {
+        return 0
+    } else {
+        refresh()
+        return 1
+    }
+}
+savegame() {
+    StoreVariable(''boubou2k_edgeturning'', cube)
 }
 
 /* Wait for tab before start */
@@ -155,9 +170,11 @@ checkSuccess() {
 
 main() {
     init()
-    intro()
-    tapToStart()
-    shuffle()
+    if (!loadgame()) {
+        intro()
+        tapToStart()
+        shuffle()
+    }
 
     new side
 
@@ -167,8 +184,9 @@ main() {
         if (Motion()) {
             side = eTapSide()
             if (eTapSideOK() && eTapToSide()) {
-                Vibrate(ANIM_DELAY)
+                Vibrate(50)
                 rotate(findEdge(side))
+                savegame()
             }
             AckMotion()
         }
