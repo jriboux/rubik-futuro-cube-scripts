@@ -13,6 +13,15 @@ Tap on top to rotate the top side.
 Tap on side to swap side and top.
 The goal is to match colors accross all edges.
 
+Edge turning puzzle
+-------------------
+
+This is an edge turning puzzle, like helicopter cube, but when you rotate an edge, centers rotate too.
+
+Tap to shuffle.
+Tap on side to flip top edge.
+The goal is to put each colors on its own side, like rubik's cube.
+
 Simon
 -----
 
@@ -26,7 +35,7 @@ You loose when you make a mistake. The score is the length of the sequence you l
 Gravity
 ----
 
-Clone of Rubik's Futuro Cube gravity game.
+Clone of Rubik's Futuro Cube gravity puzzle game.
 Added an animation for face turning.
 
 Fire

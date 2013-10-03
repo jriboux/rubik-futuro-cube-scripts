@@ -1,8 +1,10 @@
 /*
-boubou2k_gravity.p
+boubou2k_edgeturning.p
 
-Rubik's Futuro Cube Gravity game clone
-
+This is an edge turning puzzle, like helicopter cube, but when you rotate an edge, centers rotate too.
+Tap to shuffle.
+Tap on side to flip top edge.
+The goal is to put each colors on its own side, like rubik's cube.
 */
 
 #include <futurocube>
