@@ -33,6 +33,17 @@ Tap to shuffle.
 Tap on side to flip top edge.
 The goal is to put each colors on its own side, like rubik's cube.
 
+Fire
+----
+
+This is a simple test of a fire effect on the cube sides.
+
+Gravity
+----
+
+Clone of Rubik's Futuro Cube gravity puzzle game.
+Added an animation for face turning.
+
 Simon
 -----
 
@@ -43,14 +54,11 @@ Each side has a color (displayed on the top side) and each color is associated t
 If you played exactly the same sequence, a new note is added to the sequence and you must play again the whole sequence from the begining.
 You loose when you make a mistake. The score is the length of the sequence you last played.
 
-Gravity
-----
+Skewb
+-----
 
-Clone of Rubik's Futuro Cube gravity puzzle game.
-Added an animation for face turning.
+This is a skewb implementation.
 
-Fire
-----
-
-This is a simple test of a fire effect on the cube sides.
-
+Tap to shuffle.
+Put a corner to the top and tap on the cube to rotate it.
+The goal is to put each color on its own side, like rubik's cube.
