@@ -62,3 +62,12 @@ This is a skewb implementation.
 Tap to shuffle.
 Put a corner to the top and tap on the cube to rotate it.
 The goal is to put each color on its own side, like rubik's cube.
+
+Rex cube
+--------
+
+This is a rexcube implementation.
+
+Tap to shuffle.
+Put a corner to the top and tap on the cube to rotate it.
+The goal is to put each color on its own side, like rubik's cube.
