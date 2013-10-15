@@ -33,3 +33,24 @@ a.icon {
     color: inherit;
     border-bottom: none;
 }
+
+.cube-icon {
+    font-size: 75%;
+    width: 9em;
+    height: 9em;
+    background-color: black;
+    border-radius: 1em;
+}
+.cube-icon > div {
+    width: 3em;
+    height: 3em;
+    float: left;
+    padding: 0.5em 0 0 0.5em;
+}
+.cube-icon > div > div {
+    width:2em;
+    height:2em;
+    border-radius: 1em;
+    background-color: white;
+    border: 1pt solid gray;
+}
